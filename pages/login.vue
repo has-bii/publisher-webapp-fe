@@ -56,8 +56,17 @@ export default {
             login: {
                 email: '',
                 password: ''
-            }
+            },
         }
+    },
+    async fetch() {
+
+        const isLogged = await this.$store.state.auth.loggedIn
+
+        if (isLogged) {
+            this.$router.push({ name: 'index' })
+        }
+
     },
     methods: {
         async userLogin() {
@@ -68,7 +77,7 @@ export default {
             } catch (err) {
                 console.log(err)
             }
-        }
+        },
     }
 }
 </script>

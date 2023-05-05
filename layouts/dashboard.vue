@@ -41,3 +41,13 @@
     </div>
     <!-- End of Page Wrapper -->
 </template>
+
+<script>
+export default {
+    head: {
+        bodyAttrs: {
+            class: 'page-top'
+        }
+    }
+}
+</script>
