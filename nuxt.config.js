@@ -30,23 +30,45 @@ export default {
           'sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ',
         crossorigin: 'anonymous',
       },
+      {
+        rel: 'stylesheet',
+        href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
+      },
     ],
     script: [
       {
-        src: 'assets/vendor/jquery/jquery.min.js',
-        body: true,
+        src: 'https://code.jquery.com/jquery-3.3.1.slim.min.js',
+        type: 'text/javascript',
+      },
+      {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
+        type: 'text/javascript',
+      },
+      {
+        src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js',
+        type: 'text/javascript',
       },
     ],
   },
+
+  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+  plugins: [
+    '~/plugins/example.js',
+    // '~/plugins/vendor/chart.js/Chart.min.js',
+    // '~/plugins/js/sb-admin-2.min.js',
+    // '~/plugins/js/demo/chart-area-demo.js',
+    // '~/plugins/js/demo/chart-pie-demo.js',
+    // '~/plugins/vendor/jquery-easing/jquery.easing.min.js',
+    // '~/plugins/vendor/jquery/jquery.min.js',
+    // '~/plugins/vendor/bootstrap/js/bootstrap.bundle.min.js',
+  ],
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/assets/vendor/fontawesome-free/css/all.min.css',
     '@/assets/css/sb-admin-2.min.css',
+    '@/assets/fontawesome-2/css/all.min.css',
   ],
-
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -62,6 +84,8 @@ export default {
     '@nuxtjs/axios',
 
     '@nuxtjs/auth-next',
+
+    '@nuxtjs/dayjs',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

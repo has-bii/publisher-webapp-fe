@@ -1,38 +1,61 @@
 <template>
-    <div>
-        <!-- Content Row -->
+    <div class="col">
 
-        <div class="row">
+        <div class="col">
+            <div class="card shadow border-light mb-4" style="border-radius: 1rem;">
+                <div class="d-flex">
+                    <div class="p-3 flex-grow-1 text-gray-500 m-auto">Upload your contents</div>
+                    <a class="p-3"><i class="fas fa-plus-square fa-2x" style="color: rgb(78 115 223);"></i>
+                    </a>
 
-            <!-- <p v-if="$fetchState.pending">Fetching mountains...</p>
-            <p v-else-if="$fetchState.error">An error occurred :(</p>
+                </div>
+            </div>
+        </div>
 
-            <div v-else> -->
+        <p v-if="$fetchState.pending">Fetching announcements...</p>
+        <p v-else-if="$fetchState.error">An error occurred :(</p>
 
-            <!-- Timeline -->
-            <div class="col-xl-8 col-lg-7">
 
-                <div class="card border-light mb-4" style="border-radius: 1rem;">
+        <div v-else v-for="announcement in  announcements.data.result " :key="announcement.id" class="col">
+
+            <div class="card shadow border-light mb-3" style="border-radius: 1rem;">
+
+                <div class="card-body">
                     <div class="row g-0">
-                        <div class="col-md-4">
-                            <img class="img-fluid" src="assets/img/book_cover.jpg" alt="..."
-                                style="border-radius: 1rem 0 0 1rem;">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title"></h5>
-                                <p class="card-text"></p>
-                                <p class="card-text"></p>
+                        <div class="d-flex">
+                            <div class="px-3  py-2">
+                                <h4 class="card-title fw-bold">{{ announcement.title }}</h4>
+                                <div class="d-flex g-2 mb-3">
+                                    <h6 class="card-subtitle text-body-secondary">{{
+                                        announcement.content.publisher.name }}</h6>
+                                    <h6 class="card-subtitle text-body-secondary px-1">|</h6>
+                                    <h6 class="card-subtitle text-body-secondary">{{
+                                        announcement.created_date }}</h6>
+
+                                </div>
+
+                                <p class="card-text text-wrap">
+                                    {{ announcement.body }}
+                                </p>
+
+                                <img v-if="announcement.content.cover" :src="announcement.content.cover" alt=""
+                                    class="img-fluid img-thumbnail object-fit-cover" style="width: 25rem; height: 25rem;">
+
+                                <img v-else src="assets/img/book_cover2.jpg" alt=""
+                                    class="img-fluid img-thumbnail object-fit-cover" style="width: 25rem; height: 25rem;" />
+
+
                             </div>
+
                         </div>
+
                     </div>
                 </div>
 
             </div>
-        </div>
 
-        <!-- widget -->
-        <div class="col-xl-4 col-lg-5">
+
+
         </div>
 
     </div>
@@ -45,10 +68,49 @@ export default {
     data() {
         return {
             announcements: [],
+            user_content: [],
+            published_content: [],
+            checked_content: [],
+            ready_content: [],
+            rejected_content: [],
         }
     },
     async fetch() {
         this.announcements = await this.$axios.get('/announcement')
+
+        this.user_content = await this.$axios.get('/content', {
+            params: {
+                author_id: this.$auth.user.id
+            }
+        })
+
+        this.published_content = await this.$axios.get('/content', {
+            params: {
+                author_id: this.$auth.user.id,
+                status_id: 3
+            }
+        })
+
+        this.ready_content = await this.$axios.get('/content', {
+            params: {
+                author_id: this.$auth.user.id,
+                status_id: 6
+            }
+        })
+
+        this.checked_content = await this.$axios.get('/content', {
+            params: {
+                author_id: this.$auth.user.id,
+                status_id: 2
+            }
+        })
+
+        this.rejected_content = await this.$axios.get('/content', {
+            params: {
+                author_id: this.$auth.user.id,
+                status_id: 4
+            }
+        })
     },
 }
 </script>

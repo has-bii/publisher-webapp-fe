@@ -50,7 +50,7 @@
 <script>
 export default {
     auth: 'guest',
-    layout: 'form',
+    layout: 'forms',
     data() {
         return {
             login: {

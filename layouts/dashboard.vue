@@ -1,45 +1,55 @@
 <template>
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div>
+        <!-- Page Wrapper -->
+        <div id="wrapper">
 
-        <!-- Sidebar -->
-        <SideBar />
-        <!-- End of Sidebar -->
+            <!-- Sidebar -->
+            <SideBar />
+            <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+                <!-- Main Content -->
+                <div id="content">
 
-                <!-- Topbar -->
-                <TopBar />
-                <!-- End of Topbar -->
+                    <!-- Topbar -->
+                    <TopBar />
+                    <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <PageHeading />
+                        <!-- Contents -->
+                        <div>
+                            <!-- Content Row -->
 
-                    <!-- Contents -->
-                    <Nuxt />
+                            <div class="row">
+
+                                <Nuxt />
+
+                                <!-- Widgets -->
+                                <TheWidget />
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.container-fluid -->
 
                 </div>
-                <!-- /.container-fluid -->
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <TheFooter />
+                <!-- End of Footer -->
 
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <TheFooter />
-            <!-- End of Footer -->
+            <!-- End of Content Wrapper -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Page Wrapper -->
 
     </div>
-    <!-- End of Page Wrapper -->
 </template>
 
 <script>
@@ -48,6 +58,6 @@ export default {
         bodyAttrs: {
             class: 'page-top'
         }
-    }
+    },
 }
 </script>
