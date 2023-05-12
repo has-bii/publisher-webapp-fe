@@ -38,14 +38,19 @@
                                 loading
                             </td>
                         </tr>
-                        <tr v-for="content in contents.data.result.data" v-else :key="content.id">
-                            <td>
-                                1
+                        <tr v-else-if="contents.data.result.total == 0">
+                            <td colspan="9">
+                                Empty
                             </td>
-                            <td>
+                        </tr>
+                        <tr v-for="(content, index) in contents.data.result.data" v-else :key="content.id">
+                            <td v-if="show">
+                                {{ index + 1 }}
+                            </td>
+                            <td v-if="show">
                                 {{ content.name }}
                             </td>
-                            <td>
+                            <td v-if="show">
                                 <span v-if="content.status_id == 1" class="badge text-bg-dark">
                                     {{ content.status.name }}
                                 </span>
@@ -65,25 +70,25 @@
                                     {{ content.status.name }}
                                 </span>
                             </td>
-                            <td>
+                            <td v-if="show">
                                 ${{ content.price }}.00
                             </td>
-                            <td>
+                            <td v-if="show">
                                 {{ content.type ? content.type.name : 'none' }}
                             </td>
-                            <td>
+                            <td v-if="show">
                                 {{ content.genre ? content.genre.name : 'none' }}
                             </td>
-                            <td>
+                            <td v-if="show">
                                 {{ content.editor ? content.editor.name : 'none' }}
                             </td>
-                            <td>
+                            <td v-if="show">
                                 {{ content.publisher ? content.publisher.name : 'none' }}
                             </td>
-                            <td>
+                            <td v-if="show">
                                 {{ content.published_date ? content.published_date : 'none' }}
                             </td>
-                            <td>
+                            <td v-if="show">
                                 <div class="dropdown">
                                     <a class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-solid fa-square-caret-down fa-xl" style="color: #213454;"></i>
@@ -91,16 +96,18 @@
                                     <ul class="dropdown-menu">
                                         <li>
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#editModal">
+                                            <button :id="content.id" :name="content.name" type="button"
+                                                class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editModal"
+                                                @click="pushItem">
                                                 Edit
                                             </button>
 
                                         </li>
                                         <li>
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal">
+                                            <button :id="content.id" :name="content.name" type="button"
+                                                class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                                @click="pushItem">
                                                 Delete
                                             </button>
                                         </li>
@@ -124,7 +131,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Do you want to edit this content?
+                        Do you want to edit {{ $store.state.contents.name }}?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -145,11 +152,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Do you want to delete this content?
+                        Do you want to delete {{ $store.state.contents.name }}?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="delContent">
                             Delete</button>
                     </div>
                 </div>
@@ -160,12 +167,16 @@
 </template>
 
 <script>
+import { nextTick } from 'vue'
+
 export default {
     layout: 'dashboard',
     middleware: 'auth',
     data() {
         return {
             contents: [],
+            itemKey: 0,
+            show: true,
         }
     },
     async fetch() {
@@ -175,11 +186,25 @@ export default {
             }
         })
     },
-    computed: {
-        keyItem() {
-            return this.$store.state.keyItem
-        }
-    },
-    methods:
+    methods: {
+        pushItem(e) {
+            this.$store.commit('contents/pushItem', {
+                id: e.target.id,
+                name: e.target.name
+            })
+        },
+        async delContent() {
+            this.$axios.delete('/content/delete', {
+                params: {
+                    id: this.$store.state.contents.id
+                }
+            })
+
+            this.show = !this.show
+            await nextTick()
+            console.log(this.show)
+        },
+    }
+
 }
 </script>

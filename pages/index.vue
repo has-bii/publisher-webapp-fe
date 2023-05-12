@@ -26,8 +26,9 @@
                             <div class="px-3  py-2">
                                 <h4 class="card-title fw-bold">{{ announcement.title }}</h4>
                                 <div class="d-flex g-2 mb-3">
-                                    <h6 class="card-subtitle text-body-secondary">{{
-                                        announcement.content.publisher.name }}</h6>
+                                    <h6 class="card-subtitle text-body-secondary">
+                                        {{ announcement.content.publisher.name }}
+                                    </h6>
                                     <h6 class="card-subtitle text-body-secondary px-1">|</h6>
                                     <h6 class="card-subtitle text-body-secondary">{{
                                         announcement.created_date }}</h6>
@@ -38,10 +39,10 @@
                                     {{ announcement.body }}
                                 </p>
 
-                                <img v-if="announcement.content.cover" :src="announcement.content.cover" alt=""
-                                    class="img-fluid img-thumbnail object-fit-cover" style="width: 25rem; height: 25rem;">
+                                <!-- <img v-if="announcement.content.cover" :src="announcement.content.cover" alt=""
+                                    class="img-fluid img-thumbnail object-fit-cover" style="width: 25rem; height: 25rem;"> -->
 
-                                <img v-else src="assets/img/book_cover2.jpg" alt=""
+                                <img src="assets/img/book_cover2.jpg" alt=""
                                     class="img-fluid img-thumbnail object-fit-cover" style="width: 25rem; height: 25rem;" />
 
 
@@ -68,49 +69,10 @@ export default {
     data() {
         return {
             announcements: [],
-            user_content: [],
-            published_content: [],
-            checked_content: [],
-            ready_content: [],
-            rejected_content: [],
         }
     },
     async fetch() {
         this.announcements = await this.$axios.get('/announcement')
-
-        this.user_content = await this.$axios.get('/content', {
-            params: {
-                author_id: this.$auth.user.id
-            }
-        })
-
-        this.published_content = await this.$axios.get('/content', {
-            params: {
-                author_id: this.$auth.user.id,
-                status_id: 3
-            }
-        })
-
-        this.ready_content = await this.$axios.get('/content', {
-            params: {
-                author_id: this.$auth.user.id,
-                status_id: 6
-            }
-        })
-
-        this.checked_content = await this.$axios.get('/content', {
-            params: {
-                author_id: this.$auth.user.id,
-                status_id: 2
-            }
-        })
-
-        this.rejected_content = await this.$axios.get('/content', {
-            params: {
-                author_id: this.$auth.user.id,
-                status_id: 4
-            }
-        })
     },
 }
 </script>
