@@ -1,6 +1,11 @@
 require('dotenv').config()
 
 export default {
+  // env
+  env: {
+    BASE_URL: process.env.BASE_URL,
+  },
+
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
