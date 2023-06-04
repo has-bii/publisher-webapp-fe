@@ -321,6 +321,8 @@ export default {
         selectChat(chat) {
             this.message.participant = chat.participants[0].user
 
+            this.clearMessage()
+
             this.openMessage = true
 
             this.find_chatId()
@@ -336,6 +338,7 @@ export default {
         },
         clearMessage() {
             this.message.messages.length = 0
+            this.message.chat_id = null
         },
         handleKeyDown(event) {
             // Check if the pressed key is the Escape key
