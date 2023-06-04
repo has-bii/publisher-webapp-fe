@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 export default {
-  // env
   env: {
     BASE_URL: process.env.BASE_URL,
   },
