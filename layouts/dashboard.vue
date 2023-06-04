@@ -23,14 +23,8 @@
                         <!-- Contents -->
                         <div>
                             <!-- Content Row -->
+                            <Nuxt />
 
-                            <div class="row">
-
-                                <Nuxt />
-
-                                <!-- Widgets -->
-                                <TheWidget />
-                            </div>
                         </div>
 
                     </div>
@@ -54,10 +48,26 @@
 
 <script>
 export default {
+    name: 'dashboard',
     head: {
         bodyAttrs: {
-            class: 'page-top'
+            class: 'page-top hidden-scroll'
         }
     },
 }
 </script>
+
+<style>
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hidden-scroll::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hidden-scroll {
+    -ms-overflow-style: none !important;
+    /* IE and Edge */
+    scrollbar-width: none !important;
+    /* Firefox */
+}
+</style>

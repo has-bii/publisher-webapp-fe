@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="sidebar-sticky">
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -22,29 +22,15 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Contents
-            </div>
+            <TheAdmin v-if="role_id == 4 ? true : false" />
 
-            <!-- Nav Item - Contents -->
-            <li class="nav-item">
-                <NuxtLink class="nav-link" :to="{ name: 'contents' }">
-                    <i class="fas fa-fw fa-note-sticky"></i>
-                    <span>Contents</span>
-                </NuxtLink>
-            </li>
+            <ThePublisher v-if="role_id == 1 ? true : false" />
 
-            <!-- Nav Item - Add content -->
-            <li class="nav-item">
-                <NuxtLink class="nav-link" :to="{ name: 'contents' }">
-                    <i class="fas fa-fw fa-file-circle-plus"></i>
-                    <span>Upload Content</span>
-                </NuxtLink>
-            </li>
+            <TheEditor v-if="role_id == 2 ? true : false" />
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            <TheAuthor v-if="role_id == 3 || role_id == 1 || role_id == 2 ? true : false" />
+
+            <TheUser />
 
         </ul>
         <!-- End of Sidebar -->
@@ -54,3 +40,31 @@
         </script>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            role_id: this.$store.state.auth.user.role_id
+        }
+    }
+}
+
+</script>
+
+<style>
+.sidebar {
+    position: sticky !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.nuxt-link-exact-active {
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.nuxt-link-exact-active i {
+    color: #fff !important;
+}
+</style>

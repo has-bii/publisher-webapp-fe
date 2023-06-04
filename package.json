@@ -19,10 +19,11 @@
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.25.3",
-    "jquery": "^3.6.4",
+    "jquery": "^3.7.0",
     "nuxt": "^2.15.8",
     "popper.js": "^1.16.1",
     "vue": "^2.7.14",
+    "vue-popperjs": "^2.3.0",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10"
   },

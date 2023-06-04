@@ -170,6 +170,42 @@
                     </div>
                 </div>
 
+                <!-- My pending contents -->
+                <div class="card border-left-black shadow py-2 mb-3">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    My pending contents
+                                </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div v-if="$fetchState.pending" class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                            Loading
+                                        </div>
+                                        <div v-else class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                            {{ pending_content.data.result.total }}
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div v-if="$fetchState.pending" class="progress-bar bg-info" role="progressbar"
+                                                style=" width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                            </div>
+                                            <div v-else class="progress-bar bg-info" role="progressbar"
+                                                :style="{ width: (100 * pending_content.data.result.total / user_content.data.result.total) + '%' }"
+                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-rotate fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -180,7 +216,6 @@
 
 <script>
 export default {
-    layout: 'dashboard',
     middleware: 'auth',
     data() {
         return {
@@ -189,6 +224,7 @@ export default {
             checked_content: [],
             ready_content: [],
             rejected_content: [],
+            pending_content: []
         }
     },
     async fetch() {
@@ -225,6 +261,19 @@ export default {
                 status_id: 4
             }
         })
+
+        this.pending_content = await this.$axios.get('/content', {
+            params: {
+                author_id: this.$auth.user.id,
+                status_id: 1
+            }
+        })
     },
 }
 </script>
+
+<style>
+.border-left-black {
+    border-left: .25rem solid #000000 !important;
+}
+</style>

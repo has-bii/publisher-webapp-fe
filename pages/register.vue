@@ -8,6 +8,9 @@
                     <div class="p-5">
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            <div class="alert alert-danger text-center border-alert" role="alert" v-if="show">
+                                Passwords Dont' Match!
+                            </div>
                         </div>
                         <form class="user" @submit.prevent="userRegister">
                             <div class="form-group">
@@ -43,23 +46,6 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            var password = document.getElementById("inputPassword")
-                      , confirm_password = document.getElementById("repeatPassword");
-
-                    function validatePassword(){
-                      if(password.value != confirm_password.value) {
-                        confirm_password.setCustomValidity("Passwords Don't Match");
-                      } else {
-                        confirm_password.setCustomValidity('Match');
-                      }
-                    }
-
-                    password.onchange = validatePassword;
-                    confirm_password.onkeyup = validatePassword;
-        </script>
-
     </div>
 </template>
 
@@ -74,11 +60,21 @@ export default {
                 email: '',
                 password: '',
                 repeat_password: ''
-            }
+            },
+            show: false,
         }
     },
     methods: {
         async userRegister() {
+
+            if (this.register.password != this.register.repeat_password) {
+                this.show = true
+
+                return
+            } else {
+                this.show = false
+            }
+
             try {
                 // Send Registration Data to Server
                 const response = await this.$axios.post('/register', this.register)
@@ -102,7 +98,12 @@ export default {
                 console.log(error)
             }
         },
-
     }
 }
 </script>
+
+<style>
+.border-alert {
+    border-radius: 10rem;
+}
+</style>
